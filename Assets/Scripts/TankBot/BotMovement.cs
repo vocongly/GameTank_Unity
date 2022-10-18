@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Analytics.Internal;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -20,6 +22,7 @@ public class BotMovement : MonoBehaviour
     public float m_MaxLaunchForce = 30f;
     public float m_MaxChargeTime = 0.75f;
 
+    Rigidbody _rb;
 
     private float m_CurrentLaunchForce;
     private float m_ChargeSpeed;
@@ -28,7 +31,7 @@ public class BotMovement : MonoBehaviour
     public float interval = 1;
     float timer;
 
-
+    float distance = 0;
 
     private void OnEnable()
     {
@@ -39,6 +42,7 @@ public class BotMovement : MonoBehaviour
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _rb = GetComponent<Rigidbody>();
         GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
         _player = playerGameObject.transform;
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
@@ -47,11 +51,15 @@ public class BotMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float distance = Vector3.Distance(_player.position, this.transform.position);
-        if (distance < lookRadius)
+        distance = Vector3.Distance(_player.position, this.transform.position);
+        if (distance <= lookRadius)
         {
             Fire();
-            _agent.SetDestination(transform.position);
+        }
+        if (distance < lookRadius)
+        {
+            Vector3 direction = new Vector3(transform.position.x-2, transform.position.y, transform.position.z);
+            _agent.SetDestination(direction);
             FaceTarget();
         }
         else
@@ -59,6 +67,16 @@ public class BotMovement : MonoBehaviour
             _agent.SetDestination(_player.position);
         }
     }
+
+    //private void FixedUpdate()
+    //{
+    //    if (distance <= lookRadius + 2)
+    //    {
+    //        Fire();
+    //        _agent.enabled = false; // disabling the navmesh agent.
+    //        _rb.AddForce(-transform.forward * 10, ForceMode.Impulse);
+    //    }
+    //}
 
     void FaceTarget()
     {

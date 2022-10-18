@@ -41,7 +41,7 @@ public class TankHealth : MonoBehaviour
         SetHealthUI();
         if (m_CurrentHealth <= 0f && !m_Dead)
         {
-            //OnDeath();
+            OnDeath();
         }
     }
 

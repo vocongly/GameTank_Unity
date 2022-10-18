@@ -11,7 +11,7 @@ public class TankBotMovement : MonoBehaviour
     Transform player;
     public LayerMask whatIsGound, whatIsPlayer;
     List<Rigidbody> Bullets = new List<Rigidbody>();
-
+    public int m_PlayerNumber = 1;
 
     // Patroling
     public Vector3 walkPoint;

@@ -47,15 +47,35 @@ public class TankMovement : MonoBehaviour
         m_OriginalPitch = m_MovementAudio.pitch;
     }
 
+    bool check = true;
+
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (check == true)
+            {
+                Time.timeScale = 0;
+                check = false;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                check = true;
+            }
+        }
+
         EngineAudio();
     }
 
+    private void Continue()
+    {
+        Time.timeScale = 1;
+    }
 
     private void EngineAudio()
     {

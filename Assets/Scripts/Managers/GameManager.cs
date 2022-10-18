@@ -3,6 +3,7 @@ using System.Collections;
 //using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,18 +13,21 @@ public class GameManager : MonoBehaviour
     public CameraControl m_CameraControl;   
     public Text m_MessageText;              
     public GameObject m_TankPrefab;         
-    public TankManager[] m_Tanks;           
+    public TankManager[] m_Tanks;
 
 
-    private int m_RoundNumber;              
-    private WaitForSeconds m_StartWait;     
-    private WaitForSeconds m_EndWait;
-	 private TankManager m_RoundWinner;
-	 private TankManager m_GameWinner;
-
+    protected int m_RoundNumber;
+    protected WaitForSeconds m_StartWait;
+    protected WaitForSeconds m_EndWait;
+    protected TankManager m_RoundWinner;
+    protected TankManager m_GameWinner;
+    protected AudioSource mainAudio; 
 
 	 private void Start()
     {
+        mainAudio = gameObject.GetComponent<AudioSource>();
+        mainAudio.volume = PlayerPrefs.GetFloat("volume");
+
         m_StartWait = new WaitForSeconds(m_StartDelay);
         m_EndWait = new WaitForSeconds(m_EndDelay);
 
@@ -31,6 +35,14 @@ public class GameManager : MonoBehaviour
         SetCameraTargets();
 
         StartCoroutine(GameLoop());
+    }
+
+    private void FixedUpdate()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+        }
     }
 
     // instance tank : position, rotation, numbertank and setup
@@ -98,9 +110,9 @@ public class GameManager : MonoBehaviour
 
         m_MessageText.text = string.Empty;
 
-		  while (!OneTankLeft())
-		  {
-            yield return null;
+		while (!OneTankLeft())
+		{
+        yield return null;
         }
     }
 
@@ -148,7 +160,6 @@ public class GameManager : MonoBehaviour
             if (m_Tanks[i].m_Instance.activeSelf)
                 return m_Tanks[i];
         }
-
         return null;
     }
 
