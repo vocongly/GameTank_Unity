@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TankMovement : MonoBehaviour
 {
@@ -57,24 +58,20 @@ public class TankMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (check == true)
-            {
-                Time.timeScale = 0;
-                check = false;
-            }
-            else
-            {
-                Time.timeScale = 1;
-                check = true;
-            }
+            //if (check == true)
+            //{
+            //    Time.timeScale = 0;
+            //    check = false;
+            //}
+            //else
+            //{
+            //    Time.timeScale = 1;
+            //    check = true;
+            //}
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         EngineAudio();
-    }
-
-    private void Continue()
-    {
-        Time.timeScale = 1;
     }
 
     private void EngineAudio()

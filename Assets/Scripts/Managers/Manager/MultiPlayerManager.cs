@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MultiPlayerManager:BaseManager
 {
-    public PlayerManager[] m_Tanks;
+    public GameObject m_TankPrefab;
+    public PlayerManager[] m_player_Tanks;
 
     private void Start()
     {
@@ -16,9 +17,16 @@ public class MultiPlayerManager:BaseManager
         m_StartWait = new WaitForSeconds(m_StartDelay);
         m_EndWait = new WaitForSeconds(m_EndDelay);
 
+        m_Tanks = new BaseTank[m_player_Tanks.Length];
+
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+           m_Tanks[i] = m_player_Tanks[i];
+        }
+
         SpawnAllTanks();
-        SetCameraTargets(m_Tanks);
-        StartCoroutine(GameLoop(m_Tanks));
+        SetCameraTargets();
+        StartCoroutine(GameLoop());
     }
 
     // instance tank : position, rotation, numbertank and setup
