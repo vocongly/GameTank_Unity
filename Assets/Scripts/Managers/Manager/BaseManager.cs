@@ -12,14 +12,17 @@ public class BaseManager : MonoBehaviour
     public float m_EndDelay = 3f;
     public CameraControl m_CameraControl;
     public Text m_MessageText;
+    public GameObject heal;   
+    public Transform h_SpawnPointHeal;
     protected BaseTank[] m_Tanks;
-
     protected int m_RoundNumber;
     protected WaitForSeconds m_StartWait;
     protected WaitForSeconds m_EndWait;
     protected BaseTank m_RoundWinner;
     protected BaseTank m_GameWinner;
     protected AudioSource mainAudio;
+
+    float timer;
 
     private void FixedUpdate()
     {
@@ -80,9 +83,14 @@ public class BaseManager : MonoBehaviour
         EnableTankControl();
 
         m_MessageText.text = string.Empty;
-
+        
         while (!OneTankLeft())
         {
+            timer += Time.deltaTime;
+            if (timer > 10.0f) {
+                spawnHeal();
+                timer = 0;
+            }
             yield return null;
         }
     }
@@ -191,5 +199,12 @@ public class BaseManager : MonoBehaviour
         {
             m_Tanks[i].DisableControl();
         }
+    }
+
+    private void spawnHeal() {
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("Heal");
+        if (arr.Length == 0) {
+            Instantiate(heal, h_SpawnPointHeal.position, Quaternion.identity);
+        }    
     }
 }
