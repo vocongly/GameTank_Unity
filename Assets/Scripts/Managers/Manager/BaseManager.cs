@@ -12,8 +12,9 @@ public class BaseManager : MonoBehaviour
     public float m_EndDelay = 3f;
     public CameraControl m_CameraControl;
     public Text m_MessageText;
+    public GameObject heal;   
+    public Transform h_SpawnPointHeal;
     protected BaseTank[] m_Tanks;
-
     protected int m_RoundNumber;
     protected WaitForSeconds m_StartWait;
     protected WaitForSeconds m_EndWait;
@@ -75,12 +76,12 @@ public class BaseManager : MonoBehaviour
     }
 
     // enable all tank controls, empty message UI
-    private IEnumerator RoundPlaying()
+    protected virtual IEnumerator RoundPlaying()
     {
         EnableTankControl();
 
         m_MessageText.text = string.Empty;
-
+        
         while (!OneTankLeft())
         {
             yield return null;
@@ -111,7 +112,7 @@ public class BaseManager : MonoBehaviour
     }
 
 
-    private bool OneTankLeft()
+    protected bool OneTankLeft()
     {
         int numTanksLeft = 0;
 
@@ -176,7 +177,7 @@ public class BaseManager : MonoBehaviour
     }
 
 
-    private void EnableTankControl()
+    protected void EnableTankControl()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {

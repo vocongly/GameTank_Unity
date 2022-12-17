@@ -24,6 +24,11 @@ public class MenuManage : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+    public void GoToSinglePlayer()
+    {
+        SceneManager.LoadScene("BotScene");
+    }
+
     public void ChangeVolumeMusic() 
     {
         PlayerPrefs.SetFloat("volume", sliderMusic.value);

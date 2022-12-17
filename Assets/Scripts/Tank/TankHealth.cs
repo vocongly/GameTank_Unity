@@ -45,6 +45,14 @@ public class TankHealth : MonoBehaviour
         }
     }
 
+    public void Healing(float amount)
+    {
+        m_CurrentHealth += amount; 
+        if (m_CurrentHealth > 100f) {
+                m_CurrentHealth = 100; 
+        }
+        SetHealthUI();
+    }
 
     private void SetHealthUI()
     {
@@ -53,7 +61,6 @@ public class TankHealth : MonoBehaviour
 
         m_FillImage.color = Color.Lerp(m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
     }
-
 
     private void OnDeath()
     {
