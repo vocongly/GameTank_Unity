@@ -61,12 +61,17 @@ public class BotMovement : MonoBehaviour
         }
         if (distance < lookRadius && IsBotVisible())
         {
-            int distance = 3;
+            int distanceX = 2;
+            int distanceZ = 2;
             if (transform.position.x > 0)
             {
-                distance = -distance;
+                distanceX = -distanceX;
             }
-            Vector3 direction = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
+            if (transform.position.z > 0)
+            {
+                distanceZ = -distanceZ;
+            }
+            Vector3 direction = new Vector3(transform.position.x + distanceX, transform.position.y, transform.position.z + distanceZ);
             _agent.SetDestination(direction);
             FaceTarget();
         }
@@ -94,8 +99,6 @@ public class BotMovement : MonoBehaviour
             m_ShootingAudio.Play();
             timer -= interval;
         }
-        //m_Fired = true;
-        //m_CurrentLaunchForce = m_MinLaunchForce;
     }
 
     private void OnDrawGizmosSelected()
