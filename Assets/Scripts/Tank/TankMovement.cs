@@ -48,8 +48,6 @@ public class TankMovement : MonoBehaviour
         m_OriginalPitch = m_MovementAudio.pitch;
     }
 
-    bool check = true;
-
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.

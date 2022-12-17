@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Analytics.Internal;
@@ -5,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class BotMovement : MonoBehaviour
 {
@@ -52,13 +54,19 @@ public class BotMovement : MonoBehaviour
     void FixedUpdate()
     {
         distance = Vector3.Distance(_player.position, this.transform.position);
-        if (distance <= lookRadius)
+
+        if (distance <= lookRadius && IsBotVisible())
         {
             Fire();
         }
-        if (distance < lookRadius)
+        if (distance < lookRadius && IsBotVisible())
         {
-            Vector3 direction = new Vector3(transform.position.x-2, transform.position.y, transform.position.z);
+            int distance = 3;
+            if (transform.position.x > 0)
+            {
+                distance = -distance;
+            }
+            Vector3 direction = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
             _agent.SetDestination(direction);
             FaceTarget();
         }
@@ -67,16 +75,6 @@ public class BotMovement : MonoBehaviour
             _agent.SetDestination(_player.position);
         }
     }
-
-    //private void FixedUpdate()
-    //{
-    //    if (distance <= lookRadius + 2)
-    //    {
-    //        Fire();
-    //        _agent.enabled = false; // disabling the navmesh agent.
-    //        _rb.AddForce(-transform.forward * 10, ForceMode.Impulse);
-    //    }
-    //}
 
     void FaceTarget()
     {
@@ -104,5 +102,18 @@ public class BotMovement : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
+    }
+
+    bool IsBotVisible()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        {
+            if(hit.transform.tag == "Barrier")
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
