@@ -10,15 +10,13 @@ public class TankMovement : MonoBehaviour
     public AudioClip m_EngineIdling;       
     public AudioClip m_EngineDriving;      
     public float m_PitchRange = 0.2f;
-
-    
     private string m_MovementAxisName;     
     private string m_TurnAxisName;         
     private Rigidbody m_Rigidbody;         
     private float m_MovementInputValue;    
     private float m_TurnInputValue;        
     private float m_OriginalPitch;         
-
+    private bool isPause = false;
 
     private void Awake()
     {
@@ -54,21 +52,17 @@ public class TankMovement : MonoBehaviour
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //if (check == true)
-            //{
-            //    Time.timeScale = 0;
-            //    check = false;
-            //}
-            //else
-            //{
-            //    Time.timeScale = 1;
-            //    check = true;
-            //}
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Time.timeScale == 0) {
+            m_MovementAudio.Pause();
+            isPause = true;
         }
-
+        else {
+            if (isPause) {
+                m_MovementAudio.Play();
+                isPause = false;
+            }                
+        }
+        
         EngineAudio();
     }
 

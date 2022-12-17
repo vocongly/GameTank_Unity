@@ -14,6 +14,7 @@ public class BaseManager : MonoBehaviour
     public Text m_MessageText;
     public GameObject heal;   
     public Transform h_SpawnPointHeal;
+    public GameObject PauseGame;
     protected BaseTank[] m_Tanks;
     protected int m_RoundNumber;
     protected WaitForSeconds m_StartWait;
@@ -21,11 +22,11 @@ public class BaseManager : MonoBehaviour
     protected BaseTank m_RoundWinner;
     protected BaseTank m_GameWinner;
     protected AudioSource mainAudio;
-
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            PauseGame.SetActive(true);
             Time.timeScale = 0;
         }
     }

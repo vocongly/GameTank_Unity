@@ -11,6 +11,7 @@ public class MenuManage : MonoBehaviour
 
     private void Start()
     {
+        sliderMusic.value = PlayerPrefs.GetFloat("volume");
         PlayerPrefs.SetFloat("volume", sliderMusic.value);
     }
 
@@ -27,6 +28,11 @@ public class MenuManage : MonoBehaviour
     public void GoToSinglePlayer()
     {
         SceneManager.LoadScene("BotScene");
+    }
+
+     public void GoToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
     public void ChangeVolumeMusic() 
