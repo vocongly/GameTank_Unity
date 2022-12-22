@@ -9,7 +9,7 @@ public class MultiPlayerManager:BaseManager
     public GameObject m_TankPrefab;
     public PlayerManager[] m_player_Tanks;
     float timer;
-
+   
     private void Start()
     {
         mainAudio = gameObject.GetComponent<AudioSource>();
@@ -29,7 +29,15 @@ public class MultiPlayerManager:BaseManager
         SetCameraTargets();
         StartCoroutine(GameLoop());
     }
-
+    //private void Update()
+    //{
+    //    timer += Time.deltaTime;
+    //    if (timer > 3.0f)
+    //    {
+    //        Destroy(GameObject.FindGameObjectWithTag("imageEvent"));
+    //        timer = 0;
+    //    }
+    //}
     // instance tank : position, rotation, numbertank and setup
     private void SpawnAllTanks()
     {
@@ -54,6 +62,7 @@ public class MultiPlayerManager:BaseManager
             if (timer > 10.0f)
             {
                 spawnHeal();
+                spawnRandomBox();
                 timer = 0;
             }
             yield return null;
@@ -68,4 +77,14 @@ public class MultiPlayerManager:BaseManager
             Instantiate(heal, h_SpawnPointHeal.position, Quaternion.identity);
         }
     }
+
+    private void spawnRandomBox()
+    {
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("RandomBox");
+        if (arr.Length == 0)
+        {
+            Instantiate(RandomBox, h_SpawnRandomBox.position, Quaternion.identity);
+        }
+    }
+    
 }

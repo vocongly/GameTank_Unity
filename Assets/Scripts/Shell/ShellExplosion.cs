@@ -16,7 +16,10 @@ public class ShellExplosion : MonoBehaviour
         Destroy(gameObject, m_MaxLifeTime);
     }
 
-
+    private void Update()
+    {
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
         // Find all the tanks in an area around the shell and damage them.
@@ -39,8 +42,15 @@ public class ShellExplosion : MonoBehaviour
 
             float damage = CalculateDamage(targetRigidbody.position);
 
-            targetHealth.TakeDamage(damage);
-
+            
+            if(targetHealth.m_CurrentHealth == 500)
+            {
+                targetHealth.DisableHealth();
+            }
+            else
+            {
+                targetHealth.TakeDamage(damage);
+            }
 		  }
 
         m_ExplosionParticles.transform.parent = null;
