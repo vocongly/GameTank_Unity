@@ -12,9 +12,9 @@ public class TankHealth : MonoBehaviour
 
     private AudioSource m_ExplosionAudio;
     private ParticleSystem m_ExplosionParticles;
-    private float m_CurrentHealth;
+    public float m_CurrentHealth;
     private bool m_Dead;
-
+    float timer;
 
     private void Awake()
     {
@@ -45,6 +45,15 @@ public class TankHealth : MonoBehaviour
         }
     }
 
+    public void DecreaseHealth(float amount)
+    {
+        m_CurrentHealth -= amount;
+        SetHealthUI();
+        if(m_CurrentHealth <= 25)
+        {
+            m_CurrentHealth = 1;
+        }
+    }
     public void Healing(float amount)
     {
         m_CurrentHealth += amount; 
@@ -54,6 +63,24 @@ public class TankHealth : MonoBehaviour
         SetHealthUI();
     }
 
+    private void Update()
+    {
+        if (m_CurrentHealth >100f)
+        {
+            timer += Time.deltaTime;
+            if (timer > 3.0f)
+            {
+                m_CurrentHealth = 50f;
+                SetHealthUI();
+                timer = 0;
+            }
+        }
+    }
+    public void DisableHealth()
+    {
+        m_CurrentHealth = 500;
+        m_FillImage.color = Color.blue;
+    }
     private void SetHealthUI()
     {
         // Adjust the value and colour of the slider.

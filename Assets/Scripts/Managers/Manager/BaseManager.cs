@@ -11,7 +11,10 @@ public class BaseManager : MonoBehaviour
     public float m_StartDelay = 3f;
     public float m_EndDelay = 3f;
     public CameraControl m_CameraControl;
+  
     public Text m_MessageText;
+    public GameObject RandomBox;
+    public Transform h_SpawnRandomBox;
     public GameObject heal;   
     public Transform h_SpawnPointHeal;
     public GameObject PauseGame;
@@ -22,7 +25,7 @@ public class BaseManager : MonoBehaviour
     protected BaseTank m_RoundWinner;
     protected BaseTank m_GameWinner;
     protected AudioSource mainAudio;
-    
+   
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

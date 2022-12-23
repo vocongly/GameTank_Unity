@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class TankMovement : MonoBehaviour
 {
+    private float timer;
+    public const float m_defaultspeed = 12f;
     public int m_PlayerNumber = 1;         
-    public float m_Speed = 12f;            
+    public float m_Speed = m_defaultspeed;            
     public float m_TurnSpeed = 180f;       
     public AudioSource m_MovementAudio;    
     public AudioClip m_EngineIdling;       
@@ -63,10 +65,27 @@ public class TankMovement : MonoBehaviour
                 isPause = false;
             }                
         }
-        
+
+        if (m_Speed > m_defaultspeed || m_Speed < m_defaultspeed)
+        {
+            timer += Time.deltaTime;
+            if (timer > 3.0f)
+            {
+                CustomSpeed(m_defaultspeed);
+                
+                timer = 0;
+            }
+        }
+
         EngineAudio();
     }
-
+    
+    public void CustomSpeed(float speed)
+    {
+        m_Speed = speed;
+        
+    }
+   
     private void EngineAudio()
     {
         // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
