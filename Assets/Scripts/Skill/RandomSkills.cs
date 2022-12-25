@@ -29,7 +29,7 @@ public class RandomSkills : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        int number = Random.Range(1,4); 
+        int number = Random.Range(1,5); 
         switch (number)
         {
             case 1:

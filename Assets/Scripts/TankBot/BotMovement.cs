@@ -22,13 +22,8 @@ public class BotMovement : MonoBehaviour
     public AudioClip m_FireClip;
     public float m_MinLaunchForce = 15f;
     public float m_MaxLaunchForce = 30f;
-    public float m_MaxChargeTime = 0.75f;
-
-    Rigidbody _rb;
 
     private float m_CurrentLaunchForce;
-    private float m_ChargeSpeed;
-    private bool m_Fired;
 
     public float interval = 1;
     float timer;
@@ -44,10 +39,8 @@ public class BotMovement : MonoBehaviour
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _rb = GetComponent<Rigidbody>();
         GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
         _player = playerGameObject.transform;
-        m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
     }
 
     // Update is called once per frame

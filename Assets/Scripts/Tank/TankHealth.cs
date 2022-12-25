@@ -70,7 +70,7 @@ public class TankHealth : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > 3.0f)
             {
-                m_CurrentHealth = 50f;
+                m_CurrentHealth = 100f;
                 SetHealthUI();
                 timer = 0;
             }
